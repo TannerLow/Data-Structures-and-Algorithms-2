@@ -1,20 +1,29 @@
 #pragma once
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
-void quicksort(vector<int>& arr, int left, int right) {
-    if (left >= right) return;
-    int pivot = arr[(left + right) / 2];
-    int i = left, j = right;
-    while (i <= j) {
-        while (arr[i] < pivot) i++;
-        while (arr[j] > pivot) j--;
-        if (i <= j) {
+int partition(vector<int>& arr, int left, int right) {
+    int pivot = arr[right];
+    int j = left-1;
+    
+    for(int i = left; i < right; i++) {
+        if(arr[i] < pivot) {
+            j++;
             swap(arr[i], arr[j]);
-            i++; j--;
         }
     }
-    if (left < j) quicksort(arr, left, j);
-    if (i < right) quicksort(arr, i, right);
+    swap(arr[j+1], arr[right]);
+    return j+1;
+}
+
+void quicksort(vector<int>& arr, int left, int right) {
+    if(left >= right) {
+        return;
+    }
+
+    int pivot = partition(arr, left, right);
+    quicksort(arr, left, pivot-1);
+    quicksort(arr, pivot+1, right);
 }

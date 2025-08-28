@@ -1,6 +1,6 @@
 CXX = zig c++
 CXXFLAGS = -std=c++17 -O2
-ALGORITHMS = binary_search quicksort
+ALGORITHMS = binary_search quicksort lower_bound
 
 INPUT_DIR = inputs
 OUTPUT_DIR = outputs

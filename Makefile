@@ -5,14 +5,19 @@ CXX      = $(ZIG) c++
 CXXFLAGS = -std=c++20 -O2
 OUTDIR   = build
 
-.PHONY: clean
+.PHONY: all clean
 
-# Default target: build the file you specify
-ifeq ($(FILE),)
-$(error Please specify a file: make FILE=yourfile.cpp)
+# Only require FILE when building (not for clean)
+ifndef FILE
+  ifneq ($(MAKECMDGOALS),clean)
+    $(error Please specify a file: make FILE=yourfile.cpp)
+  endif
 endif
 
-OUTFILE = $(OUTDIR)/$(basename $(notdir $(FILE))).exe
+# Derive output file name only if FILE is given
+ifdef FILE
+  OUTFILE = $(OUTDIR)/$(basename $(notdir $(FILE))).exe
+endif
 
 all: $(OUTFILE)
 
@@ -22,4 +27,8 @@ $(OUTFILE): $(FILE)
 	@echo Built $(OUTFILE)
 
 clean:
+	@echo Cleaning project...
 	@if exist $(OUTDIR) rmdir /s /q $(OUTDIR)
+	@del /s /q /f *.exe 2>nul || true
+	@del /s /q /f *.pdb 2>nul || true
+	@echo Done.

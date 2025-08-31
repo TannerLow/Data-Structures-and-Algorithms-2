@@ -2,21 +2,21 @@
 #include <vector>
 
 int lowerBound(std::vector<int>& nums, int target) {
+    int left = 0;
     int size = nums.size();
-    int index = 0;
 
     while(size > 0) {
         int step = size / 2;
-        if(nums[index + step] < target) {
-            index += step+1;
+
+        if(nums[left + step] < target) {
+            left += step+1;
             size -= step+1;
         }
         else {
             size = step;
         }
     }
-
-    return index;
+    return left;
 }
 
 int main() {

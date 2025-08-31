@@ -1,6 +1,6 @@
 CXX = zig c++
 CXXFLAGS = -std=c++17 -O2
-ALGORITHMS = binary_search quicksort lower_bound
+ALGORITHMS = binary_search quicksort lower_bound boyer_moore upper_bound
 
 INPUT_DIR = inputs
 OUTPUT_DIR = outputs
@@ -23,7 +23,7 @@ test: $(ALGORITHMS)
 		echo Running %%A... && \
 		$(BUILD_DIR)\%%A.exe < $(INPUT_DIR)\%%A.in > $(BUILD_DIR)\%%A.out && \
 		fc $(BUILD_DIR)\%%A.out $(OUTPUT_DIR)\%%A.out >nul && \
-		( echo %%A passed! ) || ( echo %%A failed! ) \
+		( echo %%A passed! ) || ( echo %%A failed! ===============) \
 	)
 
 clean:
